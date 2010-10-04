@@ -10,11 +10,11 @@ browser.
 
 Where
 
-* handler - the same proc that you use in $().each.  
+* **handler** - the same proc that you use in $().each.  
 
-* endCB - callback that called after end of iteration process 
+* **endCB** - callback that called after end of iteration process 
 
-* threshold (1..1000) - defines how often to allow browser interrupt
+* **threshold** _(1..1000)_ - defines how often to allow browser interrupt
  iteration process and do it's things. If this value lesser iteration
  interruptions would happend more often. Default value is 10.
 
