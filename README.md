@@ -11,6 +11,7 @@ Example
     var highlighted = 0
     var threshold = 100
 
+    /* There is about 1000 items in this select. */
     $('div.entries').relaxedEach(function () {
        if ($(this).is(':contains("text we match")') {
           $(this).addClass('highlighted')
@@ -34,14 +35,14 @@ Where
 
 * **iterProc** - the same proc that you use in $().each.  
 
-* [optional] **endProc** - callback that called after iteration end.
+* **endProc** [optional] - callback that called after iteration end.
 
-* [optional, default=10] **threshold** - defines how often to allow
+* **threshold** [optional, default=10] - defines how often to allow
  browser interrupt iteration process and do it's things. If this value
  lesser iteration interruptions would happend more often. Acceptable
  rande is 1..1000.
 
-* [optional] **relaxProc** - custom proc to use for
+* **relaxProc** [optional] - custom proc to use for
   relaxation. E.g. if you are using jQuery in node.js this may be
   process.nextTick
 
