@@ -6,19 +6,46 @@ browser.
 
 ## Usage
 
-    $('record.selector').relaxedEach(handler, endCB, threshold)
+Example
+
+    var highlighted = 0
+    var threshold = 100
+
+    $('div.entries').relaxedEach(function () {
+       if ($(this).is(':contains("text we match")') {
+          $(this).addClass('highlighted')
+          highlighted++
+       }
+    }, function () {
+       if(!highlighted)
+         $('#status').text('Sorry you search match no results.')
+    }, threshold)
+
+Interface
+
+    $('selector').relaxedEach(
+       iterProc,
+       endProc,
+       threshold,
+       relaxProc
+    )
 
 Where
 
-* **handler** - the same proc that you use in $().each.  
+* **iterProc** - the same proc that you use in $().each.  
 
-* **endCB** - callback that called after end of iteration process 
+* [optional] **endProc** - callback that called after iteration end.
 
-* **threshold** _(1..1000)_ - defines how often to allow browser interrupt
- iteration process and do it's things. If this value lesser iteration
- interruptions would happend more often. Default value is 10.
+* [optional, default=10] **threshold** - defines how often to allow
+ browser interrupt iteration process and do it's things. If this value
+ lesser iteration interruptions would happend more often. Acceptable
+ rande is 1..1000.
 
-## Example use cases
+* [optional] **relaxProc** - custom proc to use for
+  relaxation. E.g. if you are using jQuery in node.js this may be
+  process.nextTick
+
+## Possible use cases
 
 Imagine you have 2000-3000 records on page and want to hide some of
 them (of course keep 3000 records on page is not good idea but

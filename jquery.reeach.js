@@ -7,23 +7,28 @@
  * Released under the terms of BSD license. 
  */
 
-jQuery.fn.relaxedEach = function (handler, endcb, threshold) {
+jQuery.fn.relaxedEach = function (handler, endProc, threshold, relaxProc) {
    var collection = this;
-   threshold = threshold || 10;
-   threshold %= 1000 /* Avoid control stack overflow  */
+
+   /* Handle defaults */
+   dutyCycle = dutyCycle || 10;
+   relaxProc = relaxProc || function (cb) { setTimeout(function () { cb() }, 0) }
+   endProc = endProc || function () {}
+   dutyCycle %= 1000 /* Avoid control stack overflow  */
+
+   /* Asynchronous iterator */
    function next(i) {
       if (i < collection.length) {
          handler.apply(collection[i], [])
-         if (i % threshold == 0) {
-            setTimeout(function () { next (i + 1) }, 0)
+         if (i % dutyCycle == 0) {
+            relaxProc(function () { next (i + 1) })
          } else {
             next(i + 1)
          }
       } else { 
-         if (typeof endcb == 'function') 
-            endcb(collection) 
+         endProc(collection) 
       }
    }
 
-   next(0)
+   next(0) /* Run it */
 }
